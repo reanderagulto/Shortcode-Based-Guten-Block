@@ -22,13 +22,13 @@ export default function Edit ( props ){
     const blockProps = useBlockProps();
 
     function updateSelectedTheme( val ) {
-        props.setAttributes( { selectedTheme: val } );
+        props.setAttributes( { selected_theme: val } );
     }
     function updateNoPost( val ) {
-        props.setAttributes( { numberOfPost: val } );
+        props.setAttributes( { posts_per_page: val } );
     }
     function updateFeaturedOnly( val ) {
-        props.setAttributes( { featuredOnly: val } );
+        props.setAttributes( { featured_only: val } );
     }
 
     return (
@@ -50,7 +50,7 @@ export default function Edit ( props ){
                                 className="aios-form-control"
                                 name="selectedTheme"
                                 id="selectedTheme"
-                                value={ attributes.selectedTheme }
+                                value={ attributes.selected_theme }
                                 options={ [
                                     { label: 'Classic', value: 'classic' },
                                     { label: 'Default', value: 'default' },
@@ -67,7 +67,7 @@ export default function Edit ( props ){
                         </div>
                         <div class="aios-block-col">
                             <RangeControl
-                                value={ attributes.numberOfPost }
+                                value={ attributes.posts_per_page }
                                 className="aios-form-control"
                                 name="numberOfPost"
                                 id="numberOfPost"
@@ -88,7 +88,7 @@ export default function Edit ( props ){
                                 name="featuredOnly"
                                 id="featuredOnly"                               
                                 className="aios-form-control"
-                                checked={ attributes.featuredOnly }                        
+                                checked={ attributes.featured_only }                        
                                 onChange={ ( val ) => updateFeaturedOnly(val) }
                             />
                         </div>
@@ -96,12 +96,12 @@ export default function Edit ( props ){
                 </PanelBody>
             </InspectorControls>
 
-            {/* <div class="aios-block-preview">
+            <div class="aios-block-preview">
                 <ServerSideRender 
-                    block="agentimage/aios-gutenberg"
+                    block="agentimage/aios-listing-block"
                     attributes={ props.attributes }
                 />
-            </div> */}
+            </div>
 
         </div>
     );

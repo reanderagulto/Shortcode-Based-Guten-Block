@@ -40,7 +40,7 @@ function aios_gutenberg_multi_cgb_block_assets() { // phpcs:ignore
 	wp_register_script(
 		'aios_gutenberg_multi-cgb-block-js', // Handle.
 		plugins_url( '/dist/blocks.build.js', dirname( __FILE__ ) ), // Block.build.js: We register the block here. Built with Webpack.
-		array( 'wp-blocks', 'wp-i18n', 'wp-element', 'wp-editor' ), // Dependencies, defined above.
+		array( 'wp-i18n', 'wp-element', 'wp-blocks', 'wp-components', 'wp-editor' ), // Dependencies, defined above.
 		null, // filemtime( plugin_dir_path( __DIR__ ) . 'dist/blocks.build.js' ), // Version: filemtime — Gets file modification time.
 		true // Enqueue the script in the footer.
 	);
@@ -75,7 +75,7 @@ function aios_gutenberg_multi_cgb_block_assets() { // phpcs:ignore
 	 * @since 1.16.0
 	 */
 	register_block_type(
-		'aios/communities-block', array(
+		'agentimage/aios-communities-block', array(
 			// Enqueue blocks.style.build.css on both frontend & backend.
 			'style'         => 'aios_gutenberg_multi-cgb-style-css',
 			// Enqueue blocks.build.js in the editor only.
@@ -96,7 +96,7 @@ function aios_gutenberg_multi_cgb_block_assets() { // phpcs:ignore
 	 * @since 1.16.0
 	 */
 	register_block_type(
-		'aios/listing-block', array(
+		'agentimage/aios-listing-block', array(
 			// Enqueue blocks.style.build.css on both frontend & backend.
 			'style'         => 'aios_gutenberg_multi-cgb-style-css',
 			// Enqueue blocks.build.js in the editor only.
@@ -104,13 +104,49 @@ function aios_gutenberg_multi_cgb_block_assets() { // phpcs:ignore
 			// Enqueue blocks.editor.build.css in the editor only.
 			'editor_style'  => 'aios_gutenberg_multi-cgb-block-editor-css',
 			'attributes'	=> array(
-				'selectedTheme' => array('type' => 'string',  'default' => 'classic'),
-				'numberOfPost'  => array('type' => 'number',  'default' => 4),
-				'featuredOnly'	=> array('type' => 'boolean', 'default' => false)
-			)
+				'selected_theme' 	=> array('type' => 'string',  'default' => 'classic'),
+				'selected_view' 	=> array('type' => 'string',  'default' => 'grid'),
+				'posts_per_page'  	=> array('type' => 'number',  'default' => 4),
+				'featured_only'		=> array('type' => 'boolean', 'default' => false)
+			),
+			'render_callback' 	=> 'render_listing_block'
 		)
 	);
 }
 
 // Hook: Block assets.
 add_action( 'init', 'aios_gutenberg_multi_cgb_block_assets' );
+
+
+/**
+ * This function is called when the block is being rendered on the front end of the site
+ *
+ * @param array    $attributes     The array of attributes for this block.
+ * @param string   $content        Rendered block output. ie. <InnerBlocks.Content />.
+ * @param WP_Block $block_instance The instance of the WP_Block class that represents the block being rendered.
+ */
+function render_communities_block( $attributes, $content ){
+
+}
+
+/**
+ * This function is called when the block is being rendered on the front end of the site
+ *
+ * @param array    $attributes     The array of attributes for this block.
+ * @param string   $content        Rendered block output. ie. <InnerBlocks.Content />.
+ * @param WP_Block $block_instance The instance of the WP_Block class that represents the block being rendered.
+ */
+function render_listing_block( $attributes, $content, $block_instance ){
+	ob_start();
+	/**
+	 * Keeping the markup to be returned in a separate file is sometimes better, especially if there is very complicated markup.
+	 * All of passed parameters are still accessible in the file.
+	 */
+	
+	if ( shortcode_exists( 'aios_listings' ) && isset($attributes['selected_theme']) ) {
+		$selected_view 	= $attributes['selected_view'];
+		$posts_per_page = $attributes['posts_per_page'];
+		$featured_only 	= ($attributes['featured_only'] == false) ? 0 : 1;
+	}
+	return ob_get_clean();
+}

@@ -27,7 +27,7 @@ const { registerBlockType } = wp.blocks; // Import registerBlockType() from wp.b
  * @return {?WPBlock}          The block, if it has been successfully
  *                             registered; otherwise `undefined`.
  */
-registerBlockType( 'aios/listing-block', {
+registerBlockType( 'agentimage/aios-listing-block', {
 	// Block name. Block names must be string that contains a namespace prefix. Example: my-plugin/my-custom-block.
 	title: __( 'AIOS Listings' ), // Block title.
 	icon: 'admin-home', // Block icon from Dashicons → https://developer.wordpress.org/resource/dashicons/.
@@ -38,44 +38,24 @@ registerBlockType( 'aios/listing-block', {
 		__( 'create-guten-block' ),
 	],
 	attributes: {
-		selectedTheme: {
+		selected_theme: {
 			type: 'string',
 			default: 'classic'
-		}, 
-		numberOfPost: {
+		},
+		selected_view: {
+			type: 'string',
+			default: 'grid'
+		},  
+		posts_per_page: {
 			type: 'number',
 			default: 4
 		},
-		featuredOnly: {
+		featured_only: {
 			type: 'boolean',
 			default: false
 		}
 	},
-
-	/**
-	 * The edit function describes the structure of your block in the context of the editor.
-	 * This represents what the editor will render when the block is used.
-	 *
-	 * The "edit" property must be a valid function.
-	 *
-	 * @link https://wordpress.org/gutenberg/handbook/block-api/block-edit-save/
-	 *
-	 * @param {Object} props Props.
-	 * @returns {Mixed} JSX Component.
-	 */
 	edit: EditClass,
-	
-	/**
-	 * The save function defines the way in which the different attributes should be combined
-	 * into the final markup, which is then serialized by Gutenberg into post_content.
-	 *
-	 * The "save" property must be specified and must be a valid function.
-	 *
-	 * @link https://wordpress.org/gutenberg/handbook/block-api/block-edit-save/
-	 *
-	 * @param {Object} props Props.
-	 * @returns {Mixed} JSX Frontend HTML.
-	 */
 	 save: () => {
 		return null;
 	}
