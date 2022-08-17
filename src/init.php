@@ -104,7 +104,7 @@ function aios_gutenberg_multi_cgb_block_assets() { // phpcs:ignore
 			// Enqueue blocks.editor.build.css in the editor only.
 			'editor_style'  => 'aios_gutenberg_multi-cgb-block-editor-css',
 			'attributes'	=> array(
-				'selected_theme' 	=> array('type' => 'string',  'default' => 'classic'),
+				'selected_theme' 	=> array('type' => 'string',  'default' => 'default'),
 				'selected_view' 	=> array('type' => 'string',  'default' => 'grid'),
 				'posts_per_page'  	=> array('type' => 'number',  'default' => 4),
 				'featured_only'		=> array('type' => 'boolean', 'default' => false)
@@ -143,10 +143,17 @@ function render_listing_block( $attributes, $content, $block_instance ){
 	 * All of passed parameters are still accessible in the file.
 	 */
 	
-	if ( shortcode_exists( 'aios_listings' ) && isset($attributes['selected_theme']) ) {
-		$selected_view 	= $attributes['selected_view'];
-		$posts_per_page = $attributes['posts_per_page'];
-		$featured_only 	= ($attributes['featured_only'] == false) ? 0 : 1;
+	if ( isset($attributes['selected_theme']) ) {
+		switch($attributes['selected_theme']){
+			case 'classic':
+				require plugin_dir_path( __FILE__ ) . 'listings/templates/classic/index.php';
+				break;
+			case 'default':
+				require plugin_dir_path( __FILE__ ) . 'listings/templates/default/index.php';
+				break;
+			default:
+			
+		}
 	}
 	return ob_get_clean();
 }

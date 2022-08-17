@@ -9,5 +9,8 @@
   },
   "dependencies": {
     "cgb-scripts": "1.23.1"
+  },
+  "devDependencies": {
+    "@wordpress/scripts": "^23.7.1"
   }
 }

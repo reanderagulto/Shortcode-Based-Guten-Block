@@ -9,6 +9,20 @@
 import './sass/editor.scss';
 import './sass/style.scss';
 
+/* 
+* 
+* Listing Template SASS Files
+* 
+* 
+*/
+
+// Default Theme Main SASS File
+import './templates/default/assets/sass/main.scss';
+
+// Classic Theme Main SASS File
+import './templates/classic/assets/sass/main.scss';
+
+
 import EditClass from './functions/edit';
 
 const { __ } = wp.i18n; // Import __() from wp.i18n
@@ -40,7 +54,7 @@ registerBlockType( 'agentimage/aios-listing-block', {
 	attributes: {
 		selected_theme: {
 			type: 'string',
-			default: 'classic'
+			default: 'default'
 		},
 		selected_view: {
 			type: 'string',
